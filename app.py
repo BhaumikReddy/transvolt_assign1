@@ -1,8 +1,4 @@
-"""
-Flask Web Application for Voltage Data Analysis
-Assignment 1 - Web Dashboard
-Optimized for PythonAnywhere deployment
-"""
+
 
 from flask import Flask, render_template, jsonify
 import pandas as pd
@@ -15,8 +11,8 @@ import os
 app = Flask(__name__)
 
 def load_data():
-    """Load and preprocess the voltage data"""
-    # Get the directory where this script is located
+    
+  
     script_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(script_dir, "Sample_Data.csv")
     
@@ -27,10 +23,10 @@ def load_data():
     return df, df_plot
 
 def create_all_plots():
-    """Create all plots for the dashboard"""
+   
     df, df_plot = load_data()
     
-    # Basic voltage plot
+    
     fig1 = go.Figure()
     fig1.add_trace(go.Scatter(
         x=df_plot['Timestamp'],
@@ -47,7 +43,7 @@ def create_all_plots():
         template='plotly_white'
     )
     
-    # Moving average plot
+    
     df_plot['MA5'] = df_plot['Values'].rolling(window=5).mean()
     fig2 = go.Figure()
     fig2.add_trace(go.Scatter(
@@ -72,7 +68,7 @@ def create_all_plots():
         template='plotly_white'
     )
     
-    # Advanced moving averages
+    
     df_plot['MA1000'] = df_plot['Values'].rolling(window=1000, min_periods=1).mean()
     df_plot['MA5000'] = df_plot['Values'].rolling(window=5000, min_periods=1).mean()
     
@@ -97,7 +93,7 @@ def create_all_plots():
         template='plotly_white'
     )
     
-    # Analysis results
+   
     peaks, _ = find_peaks(df['Values'])
     lows, _ = find_peaks(-df['Values'])
     peaks_df = df.iloc[peaks][['Values']]
@@ -130,8 +126,9 @@ def api_data():
     return jsonify(plots_data)
 
 if __name__ == '__main__':
-    # For local development
+    
     app.run(debug=True, host='0.0.0.0', port=5000)
 else:
-    # For production deployment (PythonAnywhere)
+    
     app.debug = False
+
